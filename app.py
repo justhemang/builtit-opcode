@@ -1092,12 +1092,16 @@ def handle_claim_need(data):
     private_chats[room_id]['members'].add(request.sid)
     emit('private_joined', {'room': room_id, 'partner': owner}, room=request.sid)
 
+    owner_sid = None
     for sid, info in connected_clients.items():
         if info.get('name', '').lower() == owner.lower() and sid != request.sid:
-            join_room(room_id, sid)
-            private_chats[room_id]['members'].add(sid)
-            emit('private_joined', {'room': room_id, 'partner': claimer, 'need_id': need_id}, room=sid)
+            owner_sid = sid
             break
+
+    if owner_sid:
+        join_room(room_id, owner_sid)
+        private_chats[room_id]['members'].add(owner_sid)
+        emit('need_claimed', {'need_id': need_id, 'claimer': claimer, 'owner': owner, 'room': room_id}, room=owner_sid)
 
     with needs_lock:
         global needs_list

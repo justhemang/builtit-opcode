@@ -1733,10 +1733,8 @@
             needs_cache = needs_cache.filter(function(n) { return n.id !== data.need_id; });
             renderNeeds();
             renderSidebarNotifs();
-            if (data.owner === (myName || 'anonymous')) {
-                var room = 'chat_' + data.need_id;
-                currentRoom = room;
-                socket.emit('join_private', { room: room });
+            if (data.room && data.owner === (myName || 'anonymous')) {
+                currentRoom = data.room;
                 document.getElementById('pcTitle').textContent = 'CHAT WITH ' + data.claimer.toUpperCase();
                 document.getElementById('privateChat').classList.add('open');
                 document.getElementById('pcMessages').innerHTML = '';
@@ -1762,6 +1760,11 @@
 
         socket.on('private_joined', function(data) {
             if (data.room) currentRoom = data.room;
+            if (data.partner) {
+                document.getElementById('pcTitle').textContent = 'CHAT WITH ' + data.partner.toUpperCase();
+                document.getElementById('privateChat').classList.add('open');
+                document.getElementById('pcMessages').innerHTML = '';
+            }
         });
 
         socket.on('chat_partner_left', function() {
