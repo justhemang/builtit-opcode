@@ -1057,7 +1057,8 @@ def handle_set_name(data):
 def handle_digital_message(data):
     payload = data.get('payload', '')
     if payload:
-        emit('new_message', data, broadcast=True, include_self=False)
+        sender_name = connected_clients.get(request.sid, {}).get('name', 'unknown')
+        emit('new_message', {'payload': payload, 'sender': sender_name}, broadcast=True, include_self=False)
 
 @socketio.on('claim_need')
 def handle_claim_need(data):
@@ -1075,6 +1076,13 @@ def handle_claim_need(data):
     join_room(room_id, request.sid)
     private_chats[room_id]['members'].add(request.sid)
     emit('private_joined', {'room': room_id, 'partner': owner}, room=request.sid)
+
+    for sid, info in connected_clients.items():
+        if info.get('name', '').lower() == owner.lower() and sid != request.sid:
+            join_room(room_id, sid)
+            private_chats[room_id]['members'].add(sid)
+            emit('private_joined', {'room': room_id, 'partner': claimer, 'need_id': need_id}, room=sid)
+            break
 
     with needs_lock:
         global needs_list
