@@ -1733,6 +1733,15 @@
             needs_cache = needs_cache.filter(function(n) { return n.id !== data.need_id; });
             renderNeeds();
             renderSidebarNotifs();
+            if (data.owner === (myName || 'anonymous')) {
+                var room = 'chat_' + data.need_id;
+                currentRoom = room;
+                socket.emit('join_private', { room: room });
+                document.getElementById('pcTitle').textContent = 'CHAT WITH ' + data.claimer.toUpperCase();
+                document.getElementById('privateChat').classList.add('open');
+                document.getElementById('pcMessages').innerHTML = '';
+                sysMsg(data.claimer + ' claimed your post. chat open.');
+            }
         });
 
         socket.on('new_private_message', function(data) {
