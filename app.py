@@ -755,6 +755,16 @@ def serve_loader_video():
     return send_from_directory('.', 'Sequence 01_3.mp4')
 
 
+@app.route('/api/clear-names', methods=['POST'])
+def clear_all_names():
+    with taken_names_lock:
+        taken_names.clear()
+    for sid, client in connected_clients.items():
+        client['name'] = 'unknown'
+    emit('device_update', {'count': len(connected_clients), 'names': []}, broadcast=True)
+    return jsonify({'success': True})
+
+
 @app.route('/api/send', methods=['POST'])
 def api_send():
     try:

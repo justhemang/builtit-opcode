@@ -213,6 +213,25 @@
             color: rgba(0, 255, 65, 0.8);
             letter-spacing: 1px;
         }
+        .sb-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--green);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 13px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .sb-btn:hover {
+            background: rgba(0, 255, 65, 0.08);
+            border-color: var(--green);
+        }
+        .sb-btn.danger { color: var(--red); border-color: rgba(255, 34, 68, 0.3); }
+        .sb-btn.danger:hover { background: rgba(255, 34, 68, 0.1); border-color: var(--red); }
         .dot {
             width: 6px;
             height: 6px;
@@ -1173,12 +1192,62 @@
             height: 100%;
             object-fit: contain;
         }
+        .loader-text {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 14px;
+            letter-spacing: 4px;
+            color: var(--green);
+            animation: blink 1s infinite;
+            z-index: 10002;
+            white-space: nowrap;
+        }
+        .loader-bar {
+            position: absolute;
+            background: var(--green);
+            z-index: 10002;
+        }
+        .loader-bar-top {
+            top: 0; left: 0;
+            height: 2px; width: 0;
+            animation: barTop var(--loader-duration, 10s) linear forwards;
+        }
+        .loader-bar-right {
+            top: 0; right: 0;
+            width: 2px; height: 0;
+            animation: barRight var(--loader-duration, 10s) linear forwards;
+            animation-delay: calc(var(--loader-duration, 10s) * 0.25);
+        }
+        .loader-bar-bottom {
+            bottom: 0; right: 0;
+            height: 2px; width: 0;
+            animation: barBottom var(--loader-duration, 10s) linear forwards;
+            animation-delay: calc(var(--loader-duration, 10s) * 0.5);
+        }
+        .loader-bar-left {
+            bottom: 0; left: 0;
+            width: 2px; height: 0;
+            animation: barLeft var(--loader-duration, 10s) linear forwards;
+            animation-delay: calc(var(--loader-duration, 10s) * 0.75);
+        }
+        @keyframes barTop { to { width: 100%; } }
+        @keyframes barRight { to { height: 100%; } }
+        @keyframes barBottom { to { width: 100%; } }
+        @keyframes barLeft { to { height: 100%; } }
     </style>
 </head>
 <body>
 
     <div id="videoLoader">
         <video id="loaderVid" src="/Sequence 01_3.mp4" autoplay muted playsinline></video>
+        <div class="loader-text">OPCODE INITIALIZING</div>
+        <div class="loader-bar loader-bar-top"></div>
+        <div class="loader-bar loader-bar-right"></div>
+        <div class="loader-bar loader-bar-bottom"></div>
+        <div class="loader-bar loader-bar-left"></div>
     </div>
 
     <!-- HOW IT WORKS OVERLAY -->
@@ -1221,6 +1290,7 @@
                 <div class="s-item"><div class="dot"></div>LIVE</div>
                 <div class="s-item"><div class="dot amber"></div>LOCK</div>
                 <div class="s-item clock-text" id="clock">00:00:00</div>
+                <button class="sb-btn" id="changeNameBtn" style="width:auto;padding:4px 10px;font-size:12px;">CHANGE NAME</button>
             </div>
         </div>
 
@@ -1336,6 +1406,9 @@
         <div class="sb-notif-list" id="sidebarNotifs">
             <div class="sb-notif-empty">no notifications</div>
         </div>
+        <div style="padding:10px;margin-top:auto;">
+            <button class="sb-btn danger" id="clearNamesBtn">CLEAR ALL NAMES</button>
+        </div>
     </div>
 
     <!-- BOTTOM MOBILE NAV -->
@@ -1379,6 +1452,9 @@
         setTimeout(function() { videoLoader.remove(); }, 650);
     }
     if (loaderVid) {
+        loaderVid.addEventListener('loadedmetadata', function() {
+            videoLoader.style.setProperty('--loader-duration', loaderVid.duration + 's');
+        });
         loaderVid.addEventListener('ended', hideLoader);
         setTimeout(hideLoader, 15000);
     } else {
@@ -1429,6 +1505,25 @@
 
     document.getElementById('nameInput').addEventListener('keydown', function(e) {
         if (e.key === 'Enter') document.getElementById('goBtn').click();
+    });
+
+    document.getElementById('changeNameBtn').addEventListener('click', function() {
+        document.getElementById('nameInput').value = myName || '';
+        nameOverlay.classList.remove('hide');
+        setTimeout(function() { document.getElementById('nameInput').focus(); }, 100);
+    });
+
+    document.getElementById('clearNamesBtn').addEventListener('click', function() {
+        if (!confirm('Clear all usernames on the server?')) return;
+        fetch('/api/clear-names', { method: 'POST' })
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                if (d.success) {
+                    myName = '';
+                    localStorage.removeItem('whisper_name');
+                    sysMsg('all names cleared');
+                }
+            });
     });
 
     // Auto-focus name input when it becomes visible
