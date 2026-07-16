@@ -294,7 +294,7 @@
         }
         .panel.on { display: flex; }
 
-        /* ---- CHAT TAB ---- */
+
         .chat-msgs {
             flex: 1;
             overflow-y: auto;
@@ -598,7 +598,7 @@
         }
         .log-row b { color: rgba(0, 255, 65, 0.8); }
 
-        /* ---- SOUND TAB ---- */
+
         .acoustic-panel {
             flex: 1;
             display: flex;
@@ -727,7 +727,7 @@
         }
         .acoustic-log-row b { color: var(--green); }
 
-        /* ---- MARKET TAB ---- */
+
         .market-panel {
             flex: 1;
             display: flex;
@@ -869,7 +869,7 @@
         }
         .footer a:hover { color: var(--green); text-decoration: underline; }
 
-        /* ---- PRIVATE CHAT MODAL ---- */
+
         .private-chat {
             display: none;
             position: fixed;
@@ -982,7 +982,7 @@
         }
         .pc-send:hover { background: rgba(0, 170, 255, 0.30); }
 
-        /* ---- BOTTOM NAV ---- */
+
         .mnav {
             position: fixed;
             bottom: 0;
@@ -1031,7 +1031,7 @@
             animation: blink 1.5s infinite;
         }
 
-        /* ---- DESKTOP RESPONSIVE ---- */
+
         @media (min-width: 901px) {
             .mnav { display: none; }
             .top-tabs { display: flex; gap: 2px; margin-left: 16px; }
@@ -1069,7 +1069,7 @@
             }
         }
 
-        /* ---- MOBILE RESPONSIVE ---- */
+
         @media (max-width: 900px) {
             body { overflow-y: auto; overflow-x: hidden; }
             .app { height: auto; min-height: 100vh; }
@@ -1098,7 +1098,7 @@
             .ov-card input[type="text"] { font-size: 14px; }
         }
 
-        /* ---- FIXED SIDEBAR ---- */
+
         .sidebar-fixed {
             position: fixed;
             top: 52px;
@@ -1250,23 +1250,21 @@
         <div class="loader-bar loader-bar-left"></div>
     </div>
 
-    <!-- HOW IT WORKS OVERLAY -->
     <div class="ov" id="howOverlay">
         <div class="ov-card">
             <h2>WHISPER</h2>
-            <p>encrypted messenger. sound + digital. your messages stay between you and the receiver.</p>
+            <p>a messenger that actually keeps your messages private. you can send them over wifi or encode them as sound waves through the air -- your call.</p>
             <ul class="how-steps">
-                <li><span class="how-num">01</span><span class="step-txt"><b>pick a callsign</b> -- your identity, stored only on your device.</span></li>
-                <li><span class="how-num">02</span><span class="step-txt"><b>set a passphrase</b> -- both you and the receiver must share this.</span></li>
-                <li><span class="how-num">03</span><span class="step-txt"><b>send via sound or internet</b> -- acoustic mode encodes messages as audio. digital mode sends over the network.</span></li>
-                <li><span class="how-num">04</span><span class="step-txt"><b>receive on any device</b> -- use your mic to decode acoustic signals, or get digital messages in real-time.</span></li>
-                <li><span class="how-num">05</span><span class="step-txt"><b>needs and services</b> -- post what you need or offer. claim a post to start a private E2E chat.</span></li>
+                <li><span class="how-num">01</span><span class="step-txt"><b>pick a callsign</b> -- your alias. nothing gets stored on any server, it lives on your device only.</span></li>
+                <li><span class="how-num">02</span><span class="step-txt"><b>share a passphrase</b> -- you and the person you're talking to need the same key. no key, no reading.</span></li>
+                <li><span class="how-num">03</span><span class="step-txt"><b>send it your way</b> -- digital mode pushes it over the network. acoustic mode turns your message into audio tones and beams it through your speaker.</span></li>
+                <li><span class="how-num">04</span><span class="step-txt"><b>receive it</b> -- point your mic at the speaker to decode acoustic signals, or just wait for digital messages to pop in.</span></li>
+                <li><span class="how-num">05</span><span class="step-txt"><b>needs board</b> -- post what you're looking for or what you can offer. someone claims it and you get a private encrypted chat.</span></li>
             </ul>
             <button id="gotItBtn">GOT IT</button>
         </div>
     </div>
 
-    <!-- NAME OVERLAY -->
     <div class="ov hide" id="nameOverlay">
         <div class="ov-card">
             <h2>CHOOSE CALLSIGN</h2>
@@ -1277,7 +1275,6 @@
         </div>
     </div>
 
-    <!-- MAIN APP -->
     <div class="app">
         <div class="topbar">
             <div class="logo"><div class="logo-ring">W</div>WHISPER</div>
@@ -1301,7 +1298,6 @@
 
         <div class="content">
 
-            <!-- CHAT PANEL -->
             <div class="panel on" id="panelChat">
                 <div class="wave-box">
                     <canvas id="wc"></canvas>
@@ -1330,7 +1326,6 @@
                 </div>
             </div>
 
-            <!-- SOUND PANEL -->
             <div class="panel" id="panelSound">
                 <div class="acoustic-panel">
                     <div class="acoustic-wave">
@@ -1362,7 +1357,6 @@
                 </div>
             </div>
 
-            <!-- MARKET PANEL -->
             <div class="panel" id="panelMarket">
                 <div class="market-panel">
                     <div class="market-form">
@@ -1390,7 +1384,6 @@
         </div>
     </div>
 
-    <!-- FIXED SIDEBAR -->
     <div class="sidebar-fixed" id="sidebarFixed">
         <div class="sb-header">RADAR</div>
         <div class="radar-wrap">
@@ -1411,7 +1404,6 @@
         </div>
     </div>
 
-    <!-- BOTTOM MOBILE NAV -->
     <nav class="mnav" id="mnav">
         <button class="mnav-btn active" data-tab="chat">
             <span class="nav-icon">MSG</span>
@@ -1429,7 +1421,6 @@
         </button>
     </nav>
 
-    <!-- PRIVATE CHAT MODAL -->
     <div class="private-chat" id="privateChat">
         <div class="pc-header">
             <div class="pc-title" id="pcTitle">PRIVATE CHAT</div>
@@ -1478,13 +1469,13 @@
         nameOverlay.classList.add('hide');
     }
 
-    // ---- UTILITIES ----
+
     function sleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
     function fmtB(b) { return b < 1024 ? b + 'B' : b < 1048576 ? (b / 1024).toFixed(1) + 'K' : (b / 1048576).toFixed(1) + 'M'; }
     function escHtml(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
     function timeAgo(ts) { var diff = Math.floor((Date.now() - ts) / 1000); if (diff < 60) return 'just now'; if (diff < 3600) return Math.floor(diff / 60) + 'm ago'; return Math.floor(diff / 3600) + 'h ago'; }
 
-    // ---- OVERLAY BUTTONS ----
+
     document.getElementById('gotItBtn').addEventListener('click', function() {
         howOverlay.classList.add('hide');
         typeBoot();
@@ -1534,7 +1525,7 @@
     });
     nameObs.observe(nameOverlay, { attributes: true, attributeFilter: ['class'] });
 
-    // ---- TAB SYSTEM ----
+
     function switchTab(tab) {
         document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('on'); });
         var panelId = 'panel' + tab.charAt(0).toUpperCase() + tab.slice(1);
@@ -1557,7 +1548,7 @@
         btn.addEventListener('click', function() { switchTab(this.getAttribute('data-tab')); });
     });
 
-    // ---- PASSPHRASE SYNC ----
+
     function syncPassFields() {
         var v = document.getElementById('passInput').value;
         document.getElementById('passAcoustic').value = v;
@@ -1569,7 +1560,7 @@
         updateHash();
     });
 
-    // ---- HASH ----
+
     function updateHash() {
         var p = document.getElementById('passInput').value;
         if (!p) {
@@ -1583,7 +1574,7 @@
     }
     updateHash();
 
-    // ---- SYSTEM + CHAT MESSAGES ----
+
     function sysMsg(t) {
         var d = document.createElement('div');
         d.className = 'mw';
@@ -1660,7 +1651,7 @@
         chatMsgs.scrollTop = chatMsgs.scrollHeight;
     }
 
-    // ---- SOCKET INIT ----
+
     try {
         socket = io();
     } catch (e) {
@@ -1769,7 +1760,7 @@
         });
     }
 
-    // ---- RADAR ----
+
     var radarEl = document.getElementById('radarEl');
     var radarNetCount = 1;
     var radarBtCount = 0;
@@ -1823,7 +1814,7 @@
         }
     }
 
-    // ---- NOTIFICATIONS ----
+
     function showNeedNotif(need) {
         if (!need) return;
         var bar = document.getElementById('notifBar');
@@ -1863,7 +1854,7 @@
         dismissNotif();
     });
 
-    // ---- MARKETPLACE ----
+
     function loadNeeds() {
         fetch('/api/needs').then(function(r) { return r.json(); }).then(function(data) {
             needs_cache = data.needs || [];
@@ -1944,7 +1935,7 @@
         fetch('/api/needs/' + need.id, { method: 'DELETE' }).then(function() { return loadNeeds(); });
     }
 
-    // ---- PRIVATE CHAT ----
+
     document.getElementById('pcCloseBtn').addEventListener('click', function() {
         document.getElementById('privateChat').classList.remove('open');
         currentRoom = null;
@@ -1981,7 +1972,7 @@
         container.scrollTop = container.scrollHeight;
     }
 
-    // ---- BOOT TEXT ----
+
     var bootLines = [
         '> whisper v1.0',
         '> acoustic mesh protocol ready',
@@ -2000,14 +1991,14 @@
         }
     }
 
-    // ---- CLOCK + UPTIME ----
+
     var t0 = Date.now();
     setInterval(function() {
         var n = new Date();
         document.getElementById('clock').textContent = [n.getHours(), n.getMinutes(), n.getSeconds()].map(function(x) { return String(x).padStart(2, '0'); }).join(':');
     }, 1000);
 
-    // ---- WAVEFORM (CHAT TAB) ----
+
     var wc = document.getElementById('wc');
     var wx = wc.getContext('2d');
     var wData = null, wAnim = false, wOff = 0, wColor = '#00ff41', wAF = null, idleP = 0;
@@ -2071,7 +2062,7 @@
     function idleLoop() { if (!wAnim) drawIdle(); requestAnimationFrame(idleLoop); }
     idleLoop();
 
-    // ---- WAVEFORM BIG + SPECTRO (SOUND TAB) ----
+
     var wcBig = document.getElementById('wcBig');
     var wxBig = wcBig ? wcBig.getContext('2d') : null;
     var wBigAnim = false, wBigAF = null, wBigOff = 0;
@@ -2150,7 +2141,7 @@
     }
     function stopSpec() { if (specInterval) { clearInterval(specInterval); specInterval = null; } }
 
-    // ---- SEND MESSAGE (CHAT TAB) ----
+
     document.getElementById('msgIn').addEventListener('keydown', function(e) {
         if (e.key === 'Enter') handleSend();
     });
@@ -2221,7 +2212,7 @@
         });
     }
 
-    // ---- TX MODE TOGGLE ----
+
     document.getElementById('txToggleBtn').addEventListener('click', function() {
         txMode = txMode === 'acoustic' ? 'digital' : 'acoustic';
         this.textContent = txMode.toUpperCase();
@@ -2238,7 +2229,7 @@
         addLog('tx: ' + txMode);
     });
 
-    // ---- FILE ATTACH ----
+
     document.getElementById('attachBtn').addEventListener('click', function() {
         document.getElementById('fileInp').click();
     });
@@ -2254,7 +2245,7 @@
         }
     });
 
-    // ---- MIC RECORDING (SOUND TAB) ----
+
     var mediaStream = null, mediaRecorder = null, audioChunks = [], isRecording = false;
 
     document.getElementById('micBigBtn').addEventListener('click', toggleMicBig);
@@ -2338,7 +2329,7 @@
         });
     }
 
-    // ---- ACOUSTIC SEND BUTTON ----
+
     document.getElementById('acousticMsgIn').addEventListener('keydown', function(e) {
         if (e.key === 'Enter') document.getElementById('acousticSendBtn').click();
     });
@@ -2353,7 +2344,7 @@
         document.getElementById('acousticMsgIn').value = '';
     });
 
-    // ---- LOAD NEEDS ON START ----
+
     loadNeeds();
 })();
 </script>
