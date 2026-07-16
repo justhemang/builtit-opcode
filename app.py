@@ -750,6 +750,11 @@ def index():
     return send_from_directory('.', 'index.html')
 
 
+@app.route('/Sequence 01_3.mp4')
+def serve_loader_video():
+    return send_from_directory('.', 'Sequence 01_3.mp4')
+
+
 @app.route('/api/send', methods=['POST'])
 def api_send():
     try:
